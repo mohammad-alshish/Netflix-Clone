@@ -1,30 +1,37 @@
-import { useState,useEffect} from "react";
-import {Link} from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import MovieList from '../MovieList/MovieList';
 
+export default function Home() {
 
-export default function Home () {
-  const [movies, setMovies] = useState([]);
+    const [movie, setMovie] = useState();
+    const getMovie = async () => {
+        try {
+            console.log(`https://me-movies.herokuapp.com`)
+            const response = await fetch(`https://me-movies.herokuapp.com/tren`)
+            console.log(response);
+            const data = await response.json();
+            console.log(data);
+            setMovie(data);
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
 
-  async function getMovies() {
-    let url = process.env.REACT_APP_SERVER;
-  //  let url = "https://me-movies.herokuapp.com";
-    console.log("1,url", url);
-    let response = await fetch(`${url}/tren`);
-    // console.log("2,response", response);
+    useEffect(() => {
+        getMovie();
+    }, []);
 
-    let moviesData = await response.json();
-     console.log("3,moviesData", moviesData);
-     setMovies(movies);
-    // console.log("states",recipes);
-  }
+    console.log("hello");
+    return (
+        <>
+            <h1>Home Page</h1>
+            <h3>Movie List</h3>
 
-  useEffect(() => {
-    getMovies();
-  }, );
+                {
+                   movie && (<MovieList movies={movie} />)
+                }
+         
 
-  return (
-    <>
-      <Link><h1>Home Page</h1></Link>
-    </>
-  );
+        </>
+    )
 }
