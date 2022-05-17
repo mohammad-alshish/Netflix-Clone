@@ -1,15 +1,21 @@
+
 import './App.css';
-import Home from 'src/components/Home/Home.js';
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Navbar from './components/Navbar/Navbar';
+import Home from './components/Home/Home';
+import FavList from './components/FavList/FavList';
+
 function App() {
   return (
     <>
-   
-    <Routes>
-    <Route path='/'element={<Home/>}/>
-    </Routes>
-    
+    <Navbar/>
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        <Route path="/favList" element={<FavList/>} />
+      </Routes>
     </>
   );
 }
+
 export default App;
